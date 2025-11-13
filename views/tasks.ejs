@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste des tâches</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Accueil</a>
+      <a href="/tasks">Tâches</a>
+      <a href="/about">À propos</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Liste des tâches (<%= total %>)</h1>
+
+    <ul>
+      <% tasks.forEach(task => { %>
+        <li>
+          <%= task.title %>
+          <% if (task.done) { %> ✅ <% } else { %> ⏳ <% } %>
+        </li>
+      <% }) %>
+    </ul>
+
+    <h2>Ajouter une nouvelle tâche</h2>
+    <form id="taskForm">
+      <input type="text" name="title" placeholder="Titre de la tâche" required>
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <p id="error" style="color:red;"></p>
+
+    <script>
+      const form = document.getElementById('taskForm');
+      const error = document.getElementById('error');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = form.title.value.trim();
+
+        const res = await fetch('/api/tasks', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title }),
+        });
+
+        if (res.ok) {
+          location.reload();
+        } else {
+          const data = await res.json();
+          error.textContent = data.error || "Erreur inconnue.";
+        }
+      });
+    </script>
+  </main>
+</body>
+</html>
