@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title><%= user.name %> - Profil</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f6fa;
+      color: #333;
+      text-align: center;
+      margin-top: 50px;
+    }
+    h1 {
+      color: #007bff;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      margin: 8px auto;
+      width: 200px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1><%= user.name %></h1>
+  <p>Âge : <%= user.age %></p>
+  <p>Profession : <%= user.occupation %></p>
+
+  <h3>Loisirs :</h3>
+  <ul>
+    <% user.hobbies.forEach(hobby => { %>
+      <li><%= hobby %></li>
+    <% }) %>
+  </ul>
+</body>
+</html>
